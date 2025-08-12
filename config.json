@@ -1,0 +1,81 @@
+{
+  "meta": { "stageWidth": 1200, "stageHeight": 720 },
+  "contactEmail": "harsh@example.com",
+  "finalPitch": "I bring engineering rigor + product curiosity. Seeking PGP at Masters Union.",
+  "hotspots": {
+    "work": {
+      "id": "work",
+      "label": "CurrentWork",
+      "icon": "assets/svg/laptop.svg",
+      "pieceId": "partition-top-left",
+      "iconPos": { "leftPct": 25, "topPct": 25, "widthPct": 10 }
+    },
+    "prev": {
+      "id": "prev",
+      "label": "PreviousRole",
+      "icon": "assets/svg/frame.svg",
+      "pieceId": "partition-bottom-left",
+      "iconPos": { "leftPct": 25, "topPct": 75, "widthPct": 10 }
+    },
+    "edu": {
+      "id": "edu",
+      "label": "Education",
+      "icon": "assets/svg/certificate.svg",
+      "pieceId": "partition-top-right",
+      "iconPos": { "leftPct": 75, "topPct": 25, "widthPct": 10 }
+    },
+    "motivation": {
+      "id": "motivation",
+      "label": "Motivation",
+      "icon": "assets/svg/poster.svg",
+      "pieceId": "partition-bottom-right",
+      "iconPos": { "leftPct": 75, "topPct": 75, "widthPct": 10 }
+    },
+    "contact": {
+      "id": "contact",
+      "label": "Contact",
+      "icon": "assets/svg/contact.svg",
+      "pieceId": "partition-center",
+      "iconPos": { "leftPct": 50, "topPct": 50, "widthPct": 12 }
+    }
+  },
+  "sequence": [
+    { "type": "dialog", "actor": "boss", "text": "We’ve been searching so long. When will we find our ideal candidate?" },
+    { "type": "dialog", "actor": "employee", "text": "I’ve found a promising candidate. His name is Harsh." },
+    {
+      "type": "question", "id": "q1",
+      "bossLines": [{ "text": "Is he currently working?", "awaitNext": false }],
+      "hotspotId": "work",
+      "employeeReveal": "Yes — currently in Japan. Has worked with Hitachi and Mizuho.",
+      "bossConfirm": "Good — noted."
+    },
+    {
+      "type": "question", "id": "q2",
+      "bossLines": [{ "text": "Did he join Japan right after graduating?", "awaitNext": false }],
+      "hotspotId": "prev",
+      "employeeReveal": "No — joined Deloitte USI (2021) and contributed to the Western Union Pay app.",
+      "bossConfirm": "Understood."
+    },
+    {
+      "type": "question", "id": "q3",
+      "bossLines": [{ "text": "What’s his educational qualification?", "awaitNext": false }],
+      "hotspotId": "edu",
+      "employeeReveal": "BCA — Jain University (2021). Also holds an MSc in Data Analytics.",
+      "bossConfirm": "Great."
+    },
+    {
+      "type": "question", "id": "q4",
+      "bossLines": [{ "text": "Why would he leave his job for our PGP?", "awaitNext": false }],
+      "hotspotId": "motivation",
+      "employeeReveal": "Wants to found a startup. Masters Union offers product frameworks & mentorship.",
+      "bossConfirm": "Makes sense."
+    },
+    {
+      "type": "question", "id": "q5",
+      "bossLines": [{ "text": "How can we contact Harsh?", "awaitNext": false }],
+      "hotspotId": "contact",
+      "employeeReveal": "Contact: harsh@example.com — open to connect for PGP discussions.",
+      "bossConfirm": "Noted."
+    }
+  ]
+}

@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Detective Resume — Harsh (Final)</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+  <div class="stage" id="stage" role="main" aria-label="Detective resume stage" tabindex="0">
+
+    <!-- Overlays (must be high in DOM) -->
+    <div id="startupOverlay" class="startup-overlay" aria-hidden="true"></div>
+    <div id="dialogOverlay" class="dialog-overlay hidden" aria-hidden="true"></div>
+
+    <!-- Banner -->
+    <div class="banner" id="banner">
+      <h1>Detective Resume — Hunt the ideal candidate</h1>
+      <button id="startBtn" class="cta">Start the Hunt</button>
+    </div>
+
+    <!-- Top controls -->
+    <div class="controls" id="controls" aria-hidden="true">
+      <button id="nextBtn" disabled>Next</button>
+      <button id="skipBtn">Skip to resume</button>
+      <button id="muteBtn">Mute</button>
+      <div id="progress" class="progress">0 / 0</div>
+    </div>
+
+    <!-- Conversation bubbles and avatars -->
+    <div class="character boss" id="boss">
+      <div class="avatar"><img src="assets/svg/boss.svg" alt="boss avatar"></div>
+      <div class="bubble" id="bossBubble" aria-live="polite"></div>
+    </div>
+
+    <div class="character employee" id="employee">
+      <div class="avatar"><img src="assets/svg/employee.svg" alt="employee avatar"></div>
+      <div class="bubble" id="empBubble" aria-live="polite"></div>
+    </div>
+
+    <!-- Scene Wrap: Contains partitions and icons -->
+    <div id="sceneWrap">
+      <!-- Partitions (simple divs) -->
+      <div id="partition-top-left" class="partition" style="left:0; top:0; width:50%; height:50%;"></div>
+      <div id="partition-top-right" class="partition" style="left:50%; top:0; width:50%; height:50%;"></div>
+      <div id="partition-bottom-left" class="partition" style="left:0; top:50%; width:50%; height:50%;"></div>
+      <div id="partition-bottom-right" class="partition" style="left:50%; top:50%; width:50%; height:50%;"></div>
+      <div id="partition-center" class="partition" style="left:25%; top:25%; width:50%; height:50%;"></div>
+
+      <!-- Icons (HTML overlay) -->
+      <div id="iconsContainer">
+        <img src="assets/svg/laptop.svg" alt="Current work" class="icon" data-hotspot-id="work" id="icon-work">
+        <img src="assets/svg/frame.svg" alt="Previous job" class="icon" data-hotspot-id="prev" id="icon-prev">
+        <img src="assets/svg/certificate.svg" alt="Education" class="icon" data-hotspot-id="edu" id="icon-edu">
+        <img src="assets/svg/poster.svg" alt="Motivation" class="icon" data-hotspot-id="motivation" id="icon-motivation">
+        <img src="assets/svg/contact.svg" alt="Contact" class="icon" data-hotspot-id="contact" id="icon-contact">
+      </div>
+
+      <!-- Canvas overlay for flashlight / blackout -->
+      <canvas id="maskCanvas" width="1200" height="720" aria-hidden="true"></canvas>
+    </div>
+
+    <!-- Final Pitch -->
+    <div id="finalScreen" class="final-screen" role="dialog" aria-modal="true" hidden>
+      <div class="final-card">
+        <h2>Harsh — Aspiring Product Manager</h2>
+        <p id="finalPitch">I bring engineering rigor + product curiosity. Seeking PGP at Masters Union.</p>
+        <p class="muted">Email: <strong id="contactEmail">harsh@example.com</strong></p>
+        <div><button id="restartBtn">Play Again</button></div>
+      </div>
+    </div>
+
+    <!-- Plain Resume -->
+    <div id="plainResume" class="plain-resume" hidden>
+      <h2>Harsh — Quick Resume</h2>
+      <ul id="resumeList"></ul>
+      <button id="closePlain">Close</button>
+    </div>
+
+  </div>
+</div>
+
+<script src="app.js" defer></script>
+</body>
+</html>
