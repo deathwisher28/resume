@@ -410,3 +410,15 @@ body {
   pointer-events: auto;
   /* Re-enables clicks */
 }
+
+/* ADD THIS TO THE END OF style.css */
+
+#flashlight-icon {
+  position: absolute; /* Allows us to position it with JS */
+  display: none;      /* Hidden by default */
+  z-index: 55;        /* On top of the maskCanvas (z-index 50) */
+  pointer-events: none; /* Crucial: Lets mouse clicks pass through it */
+  transform: rotate(-10deg); /* Optional: Tilts the icon slightly */
+    width: 180px;  /* Or any size you prefer */
+  height: 180px;
+}

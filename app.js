@@ -23,7 +23,7 @@ const contactEmail = document.getElementById('contactEmail');
 const plainResume = document.getElementById('plainResume');
 const resumeList = document.getElementById('resumeList');
 const closePlain = document.getElementById('closePlain');
-
+const flashlightIcon = document.getElementById('flashlight-icon');
 // --- State ---
 let audioCtx = null;
 let audioSynths = {};
@@ -95,7 +95,10 @@ function drawMask() {
 
 
 // --- Event Handlers ---
-maskCanvas.addEventListener('mousemove', (ev) => { if (!isSearching) return; pointer = { x: ev.offsetX, y: ev.offsetY }; requestAnimationFrame(drawMask); });
+maskCanvas.addEventListener('mousemove', (ev) => { if (!isSearching) return; pointer = { x: ev.offsetX, y: ev.offsetY }; 
+  flashlightIcon.style.left = (pointer.x + 70) + 'px'; // 70px to the right of the cursor
+  flashlightIcon.style.top = (pointer.y + 30) + 'px';  // 30px below the cursor
+requestAnimationFrame(drawMask); });
 maskCanvas.addEventListener('touchmove', (ev) => { if (!isSearching) return; ev.preventDefault(); const t = ev.touches[0]; const rect = maskCanvas.getBoundingClientRect(); pointer = { x: t.clientX - rect.left, y: t.clientY - rect.top }; requestAnimationFrame(drawMask); }, { passive: false });
 
 maskCanvas.addEventListener('click', (ev) => {
@@ -122,6 +125,7 @@ function playCorrectSfx() { playBeep(1100, 'sine', 0.14); }
 
 /* --- Search / Reveal Flow --- */
 async function startSearch(targetHotspotId) {
+    flashlightIcon.style.display = 'block';
   stage.classList.add('is-searching'); // NEW: Add class to hide partitions
   isSearching = true;
   fitCanvas();
@@ -134,6 +138,7 @@ async function startSearch(targetHotspotId) {
 }
 
 function endSearch() {
+  flashlightIcon.style.display = 'none'; 
   stage.classList.remove('is-searching'); // NEW: Remove class
   isSearching = false;
   pointer = null;
