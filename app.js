@@ -96,6 +96,33 @@ function playWrongSfx() { playSfx('sfxWrong'); }
 /* ======================================================= */
 
 
+/* ======================================================= */
+/*                 VICTORY ANIMATION LOGIC                 */
+/* ======================================================= */
+
+function launchFireworks() {
+  const duration = 12 * 1000; // 12 seconds
+  const animationEnd = Date.now() + duration;
+  const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 150 }; // zIndex places it on top
+
+  function randomInRange(min, max) {
+    return Math.random() * (max - min) + min;
+  }
+
+  const interval = setInterval(function() {
+    const timeLeft = animationEnd - Date.now();
+
+    if (timeLeft <= 0) {
+      return clearInterval(interval);
+    }
+
+    const particleCount = 50 * (timeLeft / duration);
+    // since particles fall down, start a bit higher than random
+    confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
+    confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
+  }, 250);
+}
+
 /* --- Dialogue Bubble Logic (Unchanged) --- */
 function positionBubble(actor) { const charEl = document.querySelector('.character.' + actor); if (!charEl) return; const bubbleEl = charEl.querySelector('.bubble'); if (!bubbleEl) return; const staticLeftCss = getComputedStyle(charEl).getPropertyValue('--bubble-static-left').trim(); const staticTopCss = getComputedStyle(charEl).getPropertyValue('--bubble-static-top').trim(); if (staticLeftCss || staticTopCss) { if (staticLeftCss) bubbleEl.style.left = staticLeftCss; if (staticTopCss) bubbleEl.style.top = staticTopCss; return; } const stageRect = stage.getBoundingClientRect(); const charRect = charEl.getBoundingClientRect(); const avatarEl = charEl.querySelector('.avatar'); if (!avatarEl) return; const avatarRect = avatarEl.getBoundingClientRect(); const clone = bubbleEl.cloneNode(true); clone.style.position = 'absolute'; clone.style.left = '-9999px'; clone.style.top = '-9999px'; clone.style.width = 'auto'; clone.style.maxWidth = getComputedStyle(bubbleEl).maxWidth || ''; clone.style.visibility = 'hidden'; clone.classList.remove('show'); document.body.appendChild(clone); const bRect = clone.getBoundingClientRect(); document.body.removeChild(clone); const currentHotspotId = (typeof currentQuestionIndex === 'number' && sequence[currentQuestionIndex]) ? sequence[currentQuestionIndex].hotspotId : null; let offsetX = 0; if (currentHotspotId && hotspots[currentHotspotId] && typeof hotspots[currentHotspotId].bubbleOffsetX === 'number') { offsetX = hotspots[currentHotspotId].bubbleOffsetX; } else { const varStr = getComputedStyle(charEl).getPropertyValue('--bubble-offset-x').trim(); if (varStr) { const parsed = parseInt(varStr, 10); if (!Number.isNaN(parsed)) offsetX = parsed; } } const prefersRight = (actor === 'boss'); const spaceRight = stageRect.right - avatarRect.right; const spaceLeft = avatarRect.left - stageRect.left; let placeRight = prefersRight; if (placeRight) { if (spaceRight < bRect.width + 12 && spaceLeft >= bRect.width + 12) placeRight = false; } else { if (spaceLeft < bRect.width + 12 && spaceRight >= bRect.width + 12) placeRight = true; } const gap = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--bubble-gap')) || 16; let anchorCenterX; if (placeRight) { const leftViewport = avatarRect.right + gap; anchorCenterX = leftViewport + (bRect.width / 2); } else { const leftViewport = avatarRect.left - gap - bRect.width; anchorCenterX = leftViewport + (bRect.width / 2); } anchorCenterX += offsetX; let leftViewport = anchorCenterX - (bRect.width / 2); const minLeft = stageRect.left + 8; const maxLeft = stageRect.right - bRect.width - 8; if (leftViewport < minLeft) leftViewport = minLeft; if (leftViewport > maxLeft) leftViewport = maxLeft; let topViewport = avatarRect.top + (avatarRect.height / 2) - (bRect.height / 2); const preferAboveThreshold = stageRect.top + stageRect.height * 0.65; if (avatarRect.bottom > preferAboveThreshold && (avatarRect.top - stageRect.top) >= (bRect.height + 12)) { topViewport = avatarRect.top - bRect.height - 12; } const spaceAbove = avatarRect.top - stageRect.top; const spaceBelow = stageRect.bottom - avatarRect.bottom; if (topViewport < stageRect.top + 8 && spaceAbove > spaceBelow) topViewport = avatarRect.top - bRect.height - 12; else if (topViewport + bRect.height > stageRect.bottom - 8 && spaceBelow > spaceAbove) topViewport = avatarRect.bottom + 12; const minTop = stageRect.top + 8; const maxTop = stageRect.bottom - bRect.height - 8; if (topViewport < minTop) topViewport = minTop; if (topViewport > maxTop) topViewport = maxTop; const leftRelativeToChar = leftViewport - charRect.left; const topRelativeToChar = topViewport - charRect.top; bubbleEl.style.left = `${Math.round(leftRelativeToChar)}px`; bubbleEl.style.top = `${Math.round(topRelativeToChar)}px`; }
 function showBoss(text) { empBubble.classList.remove('show'); empBubble.style.visibility = 'hidden'; empBubble.style.opacity = '0'; bossBubble.textContent = text; bossBubble.style.visibility = 'visible'; bossBubble.classList.add('show'); bossBubble.style.opacity = '1'; bossBubble.style.display = 'block'; nextBtn.disabled = false; requestAnimationFrame(() => positionBubble('boss')); }
@@ -239,7 +266,7 @@ async function runSequence() {
       
       setBgm('stop'); // NEW: Stop all looping BGM
       playSfx('bgmFinal'); // Play the final one-shot track
-      
+      launchFireworks();
       document.getElementById('controls').classList.add('on-final-screen');
       document.getElementById('boss').classList.add('on-final-screen');
       document.getElementById('employee').classList.add('on-final-screen');
