@@ -1,0 +1,292 @@
+/* resume.css - Final Version with Subtle Texture Theme */
+
+:root {
+    --bg-color: #111827;
+    --sidebar-color: #1F2937;
+    --accent-color: #3B82F6;
+    --text-color: #E5E7EB;
+    --text-muted: #9CA3AF;
+    --border-color: #374151;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    overflow-x: hidden;
+}
+
+.resume-container {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+}
+
+/* ===== Sidebar Styling ===== */
+.sidebar {
+    width: 320px;
+    flex-shrink: 0;
+    background-color: var(--sidebar-color);
+    padding: 50px 40px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid var(--border-color);
+    box-sizing: border-box;
+    z-index: 10;
+}
+
+.sidebar-header .sidebar-title {
+    margin: 0;
+    font-size: 2.5rem;
+}
+
+.sidebar-header .sidebar-subtitle {
+    margin: 5px 0 0 0;
+    font-size: 1.1rem;
+    color: var(--text-muted);
+}
+
+.sidebar-nav {
+    margin-top: 60px;
+}
+
+.sidebar-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-nav .nav-link {
+    display: block;
+    color: var(--text-muted);
+    text-decoration: none;
+    padding: 13px 0;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.2s ease-in-out;
+    position: relative;
+}
+
+.sidebar-nav .nav-link::before {
+    content: '';
+    position: absolute;
+    left: -40px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 0;
+    background-color: var(--accent-color);
+    transition: height 0.2s ease-in-out;
+}
+
+.sidebar-nav .nav-link:hover {
+    color: var(--text-color);
+}
+
+.sidebar-nav .nav-link.active {
+    color: var(--text-color);
+    font-weight: 700;
+}
+
+.sidebar-nav .nav-link.active::before {
+    height: 26px;
+}
+
+.sidebar-footer {
+    margin-top: auto;
+}
+
+.sidebar-footer .social-links {
+    margin-bottom: 25px;
+    display: flex;
+    gap: 20px;
+}
+
+.social-links a {
+    color: var(--text-muted);
+    font-size: 1.5rem;
+    transition: all 0.2s ease;
+}
+
+.social-links a:hover {
+    color: var(--accent-color);
+    transform: scale(1.1);
+}
+
+.sidebar-footer .back-link {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.2s ease;
+}
+
+.sidebar-footer .back-link:hover {
+    color: var(--accent-color);
+}
+
+/* ===== Content Panel Styling ===== */
+.content {
+    margin-left: 320px;
+    /* Same as sidebar width */
+    padding: 50px 70px;
+    /* Reduced top padding to help with scroll */
+    width: 100%;
+    box-sizing: border-box;
+
+    /* == SUBTLE TEXTURE BACKGROUND == */
+    /* This SVG creates a tiny, non-distracting dot pattern */
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="4" height="4" viewBox="0 0 4 4"><rect width="4" height="4" fill="rgba(255,255,255,0.02)"/><circle cx="2" cy="2" r="0.4" fill="rgba(255,255,255,0.04)"/></svg>');
+}
+
+
+.content-section {
+    display: none;
+}
+
+.content-section.active {
+    display: block;
+    animation: fadeIn 0.4s ease-out forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeIn-slideUp 0.5s ease-out forwards;
+}
+
+.fade-in:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+.fade-in:nth-child(3) {
+    animation-delay: 0.2s;
+}
+
+.fade-in:nth-child(4) {
+    animation-delay: 0.3s;
+}
+
+.fade-in:nth-child(5) {
+    animation-delay: 0.4s;
+}
+
+@keyframes fadeIn-slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.section-title {
+    font-size: 2.2rem;
+    margin-bottom: 50px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+p {
+    line-height: 1.8;
+    color: var(--text-muted);
+    font-size: 1.1rem;
+}
+
+ul {
+    line-height: 1.8;
+    padding-left: 20px;
+}
+
+.timeline-item,
+.recommendation {
+    margin-bottom: 45px;
+    position: relative;
+    padding-left: 30px;
+}
+
+/* == SCROLL FIX: More specific rule to remove margin from the last item in ANY section == */
+.content-section>*:last-child {
+    margin-bottom: 0 !important;
+}
+
+.timeline-item::before,
+.recommendation::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 9px;
+    width: 9px;
+    height: 9px;
+    background-color: var(--accent-color);
+    border-radius: 50%;
+}
+
+.item-title {
+    margin-bottom: 5px;
+    font-size: 1.3rem;
+}
+
+.item-info {
+    margin-top: 0;
+    font-style: italic;
+    color: var(--accent-color);
+}
+
+blockquote {
+    margin: 0 0 10px 0;
+    font-size: 1.1rem;
+    font-style: italic;
+    color: var(--text-muted);
+}
+
+cite {
+    display: block;
+    text-align: left;
+    font-weight: 500;
+}
+
+cite a {
+    color: var(--text-color);
+    text-decoration: none;
+}
+
+.contact-links {
+    margin-top: 30px;
+}
+
+.contact-link {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+    text-decoration: none;
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    transition: color 0.2s ease;
+}
+
+.contact-link:hover {
+    color: var(--accent-color);
+}
+
+.contact-link i {
+    font-size: 1.3rem;
+}

@@ -305,6 +305,7 @@ async function initFromConfig(cfg) {
   });
   
   // UPDATED: Logic to stop/resume music for resume screen
+  /*
   skipBtn.addEventListener('click', () => {
     plainResume.hidden = false;
     audioTracks['bgmDialogue'].pause();
@@ -319,22 +320,29 @@ async function initFromConfig(cfg) {
         audioTracks['bgmSearch'].play().catch(e => {});
     }
   });
+  */
   
   // UPDATED: Mute button now works correctly for all states
-  muteBtn.addEventListener('click', () => {
-    isMuted = !isMuted;
-    muteBtn.textContent = isMuted ? 'Unmute' : 'Mute';
-    if (isMuted) {
-      audioTracks['bgmDialogue'].volume = 0;
-      audioTracks['bgmSearch'].volume = 0;
-      audioTracks['bgmFinal'].muted = true; // Mute the one-shot final track
-    } else {
-      // Restore volumes to their correct pre-mute state
-      audioTracks['bgmDialogue'].volume = storedVolumes.bgmDialogue;
-      audioTracks['bgmSearch'].volume = storedVolumes.bgmSearch;
-      audioTracks['bgmFinal'].muted = false;
+muteBtn.addEventListener('click', () => {
+  isMuted = !isMuted;
+  muteBtn.textContent = isMuted ? 'Unmute' : 'Mute';
+
+  if (isMuted) {
+    audioTracks['bgmDialogue'].volume = 0;
+    audioTracks['bgmSearch'].volume = 0;
+    audioTracks['bgmFinal'].muted = true;
+  } else {
+    // Restore volumes for the looping background music
+    audioTracks['bgmDialogue'].volume = storedVolumes.bgmDialogue;
+    audioTracks['bgmSearch'].volume = storedVolumes.bgmSearch;
+    audioTracks['bgmFinal'].muted = false;
+
+    // NEW: If we are unmuting on the final screen, play the victory music
+    if (!finalScreen.hidden) {
+      playSfx('bgmFinal');
     }
-  });
+  }
+});
 
   document.getElementById('restartBtn').addEventListener('click', () => { location.reload(); });
   window.addEventListener('resize', () => { positionIcons(); fitCanvas(); drawMask(); });

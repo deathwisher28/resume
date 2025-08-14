@@ -124,16 +124,22 @@ body {
   display: flex;
   gap: 8px;
   z-index: 70;
+  align-items: center;
 }
-
-.controls button {
+/* This ONE rule will style all buttons and the link correctly */
+.controls button,
+.controls .controls-btn {
+  display: inline-block;
   padding: 8px 10px;
   border-radius: 8px;
   border: 0;
   background: #0b74de;
   color: white;
-  cursor: pointer;
+  text-decoration: none;
   font-weight: 600;
+  font-family: Inter, Segoe UI, Arial, Helvetica, sans-serif;
+  font-size: 13.333px; /* Matches default button font size */
+  cursor: pointer;
 }
 
 .progress {
